@@ -1,0 +1,20 @@
+{
+  "name": "claude-token-guard",
+  "version": "1.0.0",
+  "description": "Cut token burn on every Claude Code session — blocks expensive Explore/Plan agents and rewrites verbose Bash commands before they run",
+  "author": {
+    "name": "Ali Rezaiyan",
+    "url": "https://github.com/alirezaiyan"
+  },
+  "homepage": "https://github.com/alirezaiyan/claude-token-guard",
+  "repository": "https://github.com/alirezaiyan/claude-token-guard",
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "hooks",
+    "tokens",
+    "cost",
+    "performance",
+    "agents"
+  ]
+}

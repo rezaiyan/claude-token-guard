@@ -1,0 +1,39 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "claude-token-guard",
+  "description": "Cut token burn on every Claude Code session — blocks expensive Explore/Plan agents and rewrites verbose Bash commands before they run",
+  "owner": {
+    "name": "Ali Rezaiyan",
+    "email": ""
+  },
+  "plugins": [
+    {
+      "name": "claude-token-guard",
+      "source": "./",
+      "description": "Two PreToolUse hooks: (1) blocks Explore/Plan/research agents in favour of targeted Grep/Glob/Read, (2) rewrites git log, npm list, pytest, gradlew to token-efficient equivalents",
+      "version": "1.0.0",
+      "author": {
+        "name": "Ali Rezaiyan"
+      },
+      "homepage": "https://github.com/alirezaiyan/claude-token-guard",
+      "repository": "https://github.com/alirezaiyan/claude-token-guard",
+      "license": "MIT",
+      "keywords": [
+        "hooks",
+        "tokens",
+        "cost",
+        "performance",
+        "agents"
+      ],
+      "category": "workflow",
+      "tags": [
+        "hooks",
+        "tokens",
+        "cost",
+        "agents",
+        "performance"
+      ],
+      "strict": false
+    }
+  ]
+}
