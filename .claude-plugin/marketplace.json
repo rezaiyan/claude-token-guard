@@ -14,8 +14,8 @@
       "author": {
         "name": "Ali Rezaiyan"
       },
-      "homepage": "https://github.com/alirezaiyan/claude-token-guard",
-      "repository": "https://github.com/alirezaiyan/claude-token-guard",
+      "homepage": "https://github.com/rezaiyan/claude-token-guard",
+      "repository": "https://github.com/rezaiyan/claude-token-guard",
       "license": "MIT",
       "keywords": [
         "hooks",

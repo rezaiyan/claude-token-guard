@@ -49,7 +49,7 @@ Rules are skipped if the relevant flags are already present. `gradlew tasks/depe
     "claude-token-guard": {
       "source": {
         "source": "github",
-        "repo": "alirezaiyan/claude-token-guard"
+        "repo": "rezaiyan/claude-token-guard"
       }
     }
   }

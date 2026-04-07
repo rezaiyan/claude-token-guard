@@ -4,10 +4,10 @@
   "description": "Cut token burn on every Claude Code session — blocks expensive Explore/Plan agents and rewrites verbose Bash commands before they run",
   "author": {
     "name": "Ali Rezaiyan",
-    "url": "https://github.com/alirezaiyan"
+    "url": "https://github.com/rezaiyan"
   },
-  "homepage": "https://github.com/alirezaiyan/claude-token-guard",
-  "repository": "https://github.com/alirezaiyan/claude-token-guard",
+  "homepage": "https://github.com/rezaiyan/claude-token-guard",
+  "repository": "https://github.com/rezaiyan/claude-token-guard",
   "license": "MIT",
   "keywords": [
     "claude-code",
