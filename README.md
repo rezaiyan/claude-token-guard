@@ -39,30 +39,28 @@ Rules are skipped if the relevant flags are already present. `gradlew tasks/depe
 
 ## Installation
 
-### Option A — Private marketplace (recommended)
+### Option A — Personal (user scope)
 
-**Step 1.** Add to `~/.claude/settings.json`:
-
-```json
-{
-  "extraKnownMarketplaces": {
-    "claude-token-guard": {
-      "source": {
-        "source": "github",
-        "repo": "rezaiyan/claude-token-guard"
-      }
-    }
-  }
-}
-```
-
-**Step 2.** Install:
+Installs for you only, across all projects:
 
 ```bash
+claude plugin marketplace add rezaiyan/claude-token-guard
 claude plugin install claude-token-guard@claude-token-guard
 ```
 
-### Option B — Manual
+### Option B — Shared team repo (project scope)
+
+Run once in your repo and commit the result — teammates just need the second line after cloning:
+
+```bash
+# One-time setup (commit .claude/settings.json afterwards)
+claude plugin marketplace add rezaiyan/claude-token-guard --scope project
+
+# Everyone on the team
+claude plugin install claude-token-guard@claude-token-guard
+```
+
+### Option C — Manual
 
 Copy `hooks/agent_guard.py` and `hooks/bash_trimmer.py` anywhere, then add to `~/.claude/settings.json`:
 
