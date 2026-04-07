@@ -7,7 +7,7 @@ Bash tool call and rewrites the command before it runs — silently, without
 blocking — so Claude gets the same information in far fewer tokens.
 
 Rules applied (first match wins):
-  git log          → git log --oneline -20
+  git log (bare)   → git log --oneline -20
   npm list         → npm list --depth=0
   pip list         → pip list --format=columns
   pytest / python -m pytest  → appends -q --tb=short
@@ -22,8 +22,8 @@ import re
 import sys
 
 TRIM_RULES = [
-    # git log: replace entirely — always use oneline, cap at 20
-    (r"^git log(?! --oneline)(?! -\d)", lambda m: "git log --oneline -20"),
+    # git log: bare call only — don't clobber calls that already have args/flags
+    (r"^git log$", lambda m: "git log --oneline -20"),
     # npm list: replace entirely — depth 0 only
     (r"^npm list(?! --depth)", lambda m: "npm list --depth=0"),
     # pip list: replace entirely

@@ -87,6 +87,24 @@ Copy `hooks/agent_guard.py` and `hooks/bash_trimmer.py` anywhere, then add to `~
 
 ## Customising
 
+**Change the guard mode** — set `AGENT_GUARD_MODE` in your environment or inline in the hook command:
+
+| Mode | Behaviour |
+|---|---|
+| `block` (default) | Hard block — Claude cannot proceed |
+| `warn` | Prints a bold warning to stderr, Claude proceeds anyway |
+| `ask` | Interactive prompt in the terminal, you decide per-invocation |
+
+```bash
+# Shell (persistent)
+export AGENT_GUARD_MODE=warn   # or: ask
+
+# Or inline in settings.json hook command:
+"command": "AGENT_GUARD_MODE=ask python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/agent_guard.py\""
+```
+
+In `ask` mode the prompt appears directly in your terminal with a bold warning and a `[y/N]` confirmation. Falls back to `block` when no TTY is available (e.g. CI).
+
 **Add more blocked agent types** — edit `BLOCKED_TYPES` in `agent_guard.py`:
 ```python
 BLOCKED_TYPES = {"Explore", "Plan", "general-purpose"}
