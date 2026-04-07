@@ -20,6 +20,8 @@ Blocks expensive agent types before they consume 20–50K tokens on tasks that `
 
 Claude gets a clear error message explaining what to use instead, so it self-corrects.
 
+![Agent Guard blocking an Explore agent](docs/agent-guard-demo.png)
+
 ### 2. Bash Trimmer
 
 Silently rewrites verbose Bash commands to token-efficient equivalents before they run:
