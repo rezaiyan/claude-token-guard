@@ -46,8 +46,8 @@ Rules are skipped if the relevant flags are already present. `gradlew tasks/depe
 Installs for you only, across all projects:
 
 ```bash
-claude plugin marketplace add rezaiyan/claude-token-guard
-claude plugin install claude-token-guard@claude-token-guard
+claude plugin marketplace add rezaiyan/claude-plugins
+claude plugin install claude-token-guard@rezaiyan
 ```
 
 ### Option B — Shared team repo (project scope)
@@ -56,10 +56,10 @@ Run once in your repo and commit the result — teammates just need the second l
 
 ```bash
 # One-time setup (commit .claude/settings.json afterwards)
-claude plugin marketplace add rezaiyan/claude-token-guard --scope project
+claude plugin marketplace add rezaiyan/claude-plugins --scope project
 
 # Everyone on the team
-claude plugin install claude-token-guard@claude-token-guard
+claude plugin install claude-token-guard@rezaiyan
 ```
 
 ### Option C — Manual
