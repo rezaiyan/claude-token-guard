@@ -41,28 +41,29 @@ Rules are skipped if the relevant flags are already present. `gradlew tasks/depe
 
 ## Installation
 
-### Option A — Personal (user scope)
-
-Installs for you only, across all projects:
+### Claude Code plugin (recommended)
 
 ```bash
+# Add the marketplace (once)
 claude plugin marketplace add rezaiyan/claude-plugins
+
+# Install
 claude plugin install claude-token-guard@rezaiyan
 ```
 
-### Option B — Shared team repo (project scope)
+### Project scope (shared team repo)
 
-Run once in your repo and commit the result — teammates just need the second line after cloning:
+Run once, commit `.claude/settings.json` — teammates just need the second line after cloning:
 
 ```bash
-# One-time setup (commit .claude/settings.json afterwards)
+# One-time setup
 claude plugin marketplace add rezaiyan/claude-plugins --scope project
 
 # Everyone on the team
 claude plugin install claude-token-guard@rezaiyan
 ```
 
-### Option C — Manual
+### Manual
 
 Copy `hooks/agent_guard.py` and `hooks/bash_trimmer.py` anywhere, then add to `~/.claude/settings.json`:
 
