@@ -10,7 +10,7 @@
       "name": "claude-token-guard",
       "source": "./",
       "description": "Two PreToolUse hooks: (1) blocks Explore/Plan/research agents in favour of targeted Grep/Glob/Read, (2) rewrites git log, npm list, pytest, gradlew to token-efficient equivalents",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": {
         "name": "Ali Rezaiyan"
       },
