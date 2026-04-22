@@ -28,14 +28,21 @@ Silently rewrites verbose Bash commands to token-efficient equivalents before th
 
 | Original | Rewritten to |
 |---|---|
-| `git log` | `git log --oneline -20` |
-| `npm list` | `npm list --depth=0` |
+| `git log` | `git log --oneline -20` (limit configurable via `CLAUDE_TOKEN_GUARD_GIT_LOG_LIMIT`) |
+| `npm list [flags]` | `npm list [flags] --depth=0` (existing flags preserved) |
+| `yarn list [flags]` | `yarn list [flags] --depth=0` (existing flags preserved) |
 | `pip list` | `pip list --format=columns` |
+| `docker images` | columnar format (repo, tag, size) |
+| `docker ps` | columnar format (name, status, ports) |
+| `mvn test\|verify\|install` | appends `-q` |
+| `go test ... -v ...` | pipes to `tail -100` |
 | `pytest ...` | `pytest ... -q --tb=short` |
 | `python -m pytest ...` | `python -m pytest ... -q --tb=short` |
 | `./gradlew <task>` | `./gradlew <task> --quiet` |
 
 Rules are skipped if the relevant flags are already present. `gradlew tasks/dependencies/help/properties/projects` are excluded (their output is the point).
+
+Set `CLAUDE_TOKEN_GUARD_BYPASS=1` to skip all rewrites for a single invocation.
 
 ---
 
@@ -45,10 +52,10 @@ Rules are skipped if the relevant flags are already present. `gradlew tasks/depe
 
 ```bash
 # Add the marketplace (once)
-claude plugin marketplace add rezaiyan/claude-plugins
+claude plugin marketplace add rezaiyan/claude-token-guard
 
 # Install
-claude plugin install claude-token-guard@rezaiyan
+claude plugin install claude-token-guard@token-guard
 ```
 
 ### Project scope (shared team repo)
@@ -57,13 +64,15 @@ Run once, commit `.claude/settings.json` — teammates just need the second line
 
 ```bash
 # One-time setup
-claude plugin marketplace add rezaiyan/claude-plugins --scope project
+claude plugin marketplace add rezaiyan/claude-token-guard --scope project
 
 # Everyone on the team
-claude plugin install claude-token-guard@rezaiyan
+claude plugin install claude-token-guard@token-guard
 ```
 
 ### Manual
+
+> ⚠️ Manual installs must be removed manually — `claude plugin uninstall` won't clean up hooks added directly to `settings.json`.
 
 Copy `hooks/agent_guard.py` and `hooks/bash_trimmer.py` anywhere, then add to `~/.claude/settings.json`:
 
@@ -83,6 +92,15 @@ Copy `hooks/agent_guard.py` and `hooks/bash_trimmer.py` anywhere, then add to `~
   }
 }
 ```
+
+### Verify the hooks are wired up
+
+```bash
+python3 /path/to/agent_guard.py --check
+python3 /path/to/bash_trimmer.py --check
+```
+
+Each prints a status line and exits 0 if the hook is reachable.
 
 ---
 
@@ -106,14 +124,62 @@ export AGENT_GUARD_MODE=warn   # or: ask
 
 In `ask` mode the prompt appears directly in your terminal with a bold warning and a `[y/N]` confirmation. Falls back to `block` when no TTY is available (e.g. CI).
 
-**Add more blocked agent types** — edit `BLOCKED_TYPES` in `agent_guard.py`:
-```python
-BLOCKED_TYPES = {"Explore", "Plan", "general-purpose"}
+**Block additional agent types** — set `CLAUDE_TOKEN_GUARD_EXTRA_BLOCKED` (comma-separated):
+
+```bash
+export CLAUDE_TOKEN_GUARD_EXTRA_BLOCKED=general-purpose,codex
+```
+
+**Tune the git log limit:**
+
+```bash
+export CLAUDE_TOKEN_GUARD_GIT_LOG_LIMIT=50
+```
+
+**Skip rewrites for one command:**
+
+```bash
+CLAUDE_TOKEN_GUARD_BYPASS=1 git log  # full output, no rewrite
 ```
 
 **Add more Bash trim rules** — append to `TRIM_RULES` in `bash_trimmer.py`:
 ```python
-(r"^docker images$", lambda m: "docker images --format 'table {{.Repository}}\t{{.Tag}}\t{{.Size}}'"),
+(r"^my-tool$", lambda m: "my-tool --quiet"),
+```
+
+---
+
+## Savings reporting
+
+Every rewrite and block is logged to `~/.claude/token-guard-stats.jsonl`. Each line is a JSON object:
+
+```json
+{"ts": "2026-04-22T10:00:00", "hook": "bash_trimmer", "action": "rewrite", "detail": "'npm list -g' → 'npm list -g --depth=0'"}
+{"ts": "2026-04-22T10:01:00", "hook": "agent_guard",  "action": "block",   "detail": "Explore"}
+```
+
+Quick summary:
+
+```bash
+# Count by hook and action
+jq -r '"\(.hook) \(.action)"' ~/.claude/token-guard-stats.jsonl | sort | uniq -c | sort -rn
+```
+
+---
+
+## Uninstalling
+
+```bash
+claude plugin uninstall claude-token-guard@token-guard
+```
+
+If you set `AGENT_GUARD_MODE` or other env vars in `settings.json`, remove them manually from the `"env"` block — uninstalling the plugin does not touch environment configuration.
+
+After uninstalling, the `rezaiyan/claude-token-guard` marketplace entry stays in `settings.json`. Remove it manually if you want a fully clean state:
+
+```json
+// Remove this from extraKnownMarketplaces in settings.json:
+{ "name": "rezaiyan/claude-token-guard", ... }
 ```
 
 ---

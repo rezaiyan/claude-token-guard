@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "claude-token-guard",
+  "name": "token-guard",
   "description": "Cut token burn on every Claude Code session — blocks expensive Explore/Plan agents and rewrites verbose Bash commands before they run",
   "owner": {
     "name": "Ali Rezaiyan"
