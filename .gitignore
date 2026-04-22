@@ -10,3 +10,6 @@ __pycache__/
 .vscode/
 .idea/
 *.swp
+
+# Claude Code local config
+.claude/settings.local.json
