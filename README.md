@@ -52,10 +52,10 @@ Set `CLAUDE_TOKEN_GUARD_BYPASS=1` to skip all rewrites for a single invocation.
 
 ```bash
 # Add the marketplace (once)
-claude plugin marketplace add rezaiyan/claude-token-guard
+claude plugin marketplace add rezaiyan/claude-plugins
 
 # Install
-claude plugin install claude-token-guard@token-guard
+claude plugin install claude-token-guard@rezaiyan
 ```
 
 ### Project scope (shared team repo)
@@ -64,10 +64,10 @@ Run once, commit `.claude/settings.json` — teammates just need the second line
 
 ```bash
 # One-time setup
-claude plugin marketplace add rezaiyan/claude-token-guard --scope project
+claude plugin marketplace add rezaiyan/claude-plugins --scope project
 
 # Everyone on the team
-claude plugin install claude-token-guard@token-guard
+claude plugin install claude-token-guard@rezaiyan
 ```
 
 ### Manual
@@ -197,10 +197,10 @@ MIT
 
 ---
 
-## More Claude tools
+## More Claude tools by rezaiyan
 
-| Tool | Description |
-|------|-------------|
-| [claude-notifier](https://github.com/rezaiyan/claude-notifier) | Desktop notifications when Claude finishes or needs input (macOS + Linux) |
-| [skillfetch](https://github.com/rezaiyan/skillfetch) | Sync AI skill instructions from GitHub repos — security-scanned, diff-previewed |
-| [claude-session-manager](https://github.com/rezaiyan/claude-session-manager) | Desktop app for running multiple Claude Code sessions side by side |
+| Plugin | Description | Install |
+|--------|-------------|---------|
+| [claude-notifier](https://github.com/rezaiyan/claude-notifier) | Desktop notifications when Claude finishes or needs input (macOS + Linux) | `claude plugin install claude-notifier@rezaiyan` |
+| [skillfetch](https://github.com/rezaiyan/skillfetch) | Sync AI skill instructions from GitHub repos — security-scanned, diff-previewed | `claude plugin install skillfetch@rezaiyan` |
+| [claude-session-manager](https://github.com/rezaiyan/claude-session-manager) | Desktop app for running multiple Claude Code sessions side by side | — |
