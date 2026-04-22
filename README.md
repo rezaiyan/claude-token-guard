@@ -170,16 +170,16 @@ jq -r '"\(.hook) \(.action)"' ~/.claude/token-guard-stats.jsonl | sort | uniq -c
 ## Uninstalling
 
 ```bash
-claude plugin uninstall claude-token-guard@token-guard
+claude plugin uninstall claude-token-guard@rezaiyan
 ```
 
 If you set `AGENT_GUARD_MODE` or other env vars in `settings.json`, remove them manually from the `"env"` block — uninstalling the plugin does not touch environment configuration.
 
-After uninstalling, the `rezaiyan/claude-token-guard` marketplace entry stays in `settings.json`. Remove it manually if you want a fully clean state:
+After uninstalling, the `rezaiyan/claude-plugins` marketplace entry stays in `settings.json`. Remove it manually if you want a fully clean state:
 
 ```json
 // Remove this from extraKnownMarketplaces in settings.json:
-{ "name": "rezaiyan/claude-token-guard", ... }
+{ "name": "rezaiyan/claude-plugins", ... }
 ```
 
 ---
