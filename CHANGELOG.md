@@ -8,6 +8,8 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [1.1.1] - 2026-05-04
 
+## [1.1.1] - 2026-05-04
+
 ### Added
 - `scripts/install.sh` — self-contained installer with both hook scripts embedded; works without GitHub access (curl one-liner, local file, USB, etc.)
 - README: Shell installer section with curl one-liner for anonymous/no-account install
