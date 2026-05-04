@@ -50,6 +50,8 @@ Set `CLAUDE_TOKEN_GUARD_BYPASS=1` to skip all rewrites for a single invocation.
 
 ### Claude Code plugin (recommended)
 
+Requires Claude Code plugin support and GitHub access.
+
 ```bash
 # Add the marketplace (once)
 claude plugin marketplace add rezaiyan/claude-plugins
@@ -70,11 +72,40 @@ claude plugin marketplace add rezaiyan/claude-plugins --scope project
 claude plugin install claude-token-guard@rezaiyan
 ```
 
-### Manual
+### Shell installer (no GitHub account required)
 
-> ⚠️ Manual installs must be removed manually — `claude plugin uninstall` won't clean up hooks added directly to `settings.json`.
+Downloads and runs a self-contained install script. Works with any public internet access — no GitHub login needed.
 
-Copy `hooks/agent_guard.py` and `hooks/bash_trimmer.py` anywhere, then add to `~/.claude/settings.json`:
+```bash
+# User scope (~/.claude)
+curl -fsSL https://raw.githubusercontent.com/rezaiyan/claude-token-guard/main/scripts/install.sh | bash
+
+# Project scope (./.claude) — commit settings.json afterwards
+curl -fsSL https://raw.githubusercontent.com/rezaiyan/claude-token-guard/main/scripts/install.sh | bash -s -- --project
+```
+
+The script embeds both hook files, writes them to your Claude settings directory, and patches `settings.json` automatically.
+
+```bash
+# Verify after install
+curl -fsSL https://raw.githubusercontent.com/rezaiyan/claude-token-guard/main/scripts/install.sh | bash -s -- --check
+
+# Uninstall
+curl -fsSL https://raw.githubusercontent.com/rezaiyan/claude-token-guard/main/scripts/install.sh | bash -s -- --uninstall
+```
+
+### Manual (no internet required after download)
+
+Download `scripts/install.sh` once by any means (USB, email, corporate file share, etc.), then run it offline:
+
+```bash
+bash install.sh              # user scope
+bash install.sh --project    # project scope
+bash install.sh --check      # verify hooks
+bash install.sh --uninstall  # remove hooks
+```
+
+Or wire the hooks manually. Copy `hooks/agent_guard.py` and `hooks/bash_trimmer.py` anywhere, then add to `~/.claude/settings.json`:
 
 ```json
 {
@@ -92,6 +123,8 @@ Copy `hooks/agent_guard.py` and `hooks/bash_trimmer.py` anywhere, then add to `~
   }
 }
 ```
+
+> ⚠️ Manual installs must be removed manually — `claude plugin uninstall` won't clean up hooks added directly to `settings.json`.
 
 ### Verify the hooks are wired up
 
