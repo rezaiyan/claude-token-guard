@@ -50,14 +50,14 @@ Set `CLAUDE_TOKEN_GUARD_BYPASS=1` to skip all rewrites for a single invocation.
 
 ### Claude Code plugin (recommended)
 
-Requires Claude Code plugin support and GitHub access.
+Works for any user — no GitHub account, no SSH keys required.
 
 ```bash
 # Add the marketplace (once)
-claude plugin marketplace add rezaiyan/claude-plugins
+claude plugin marketplace add https://github.com/rezaiyan/claude-token-guard
 
 # Install
-claude plugin install claude-token-guard@rezaiyan
+claude plugin install claude-token-guard@token-guard
 ```
 
 ### Project scope (shared team repo)
@@ -66,10 +66,10 @@ Run once, commit `.claude/settings.json` — teammates just need the second line
 
 ```bash
 # One-time setup
-claude plugin marketplace add rezaiyan/claude-plugins --scope project
+claude plugin marketplace add https://github.com/rezaiyan/claude-token-guard --scope project
 
 # Everyone on the team
-claude plugin install claude-token-guard@rezaiyan
+claude plugin install claude-token-guard@token-guard
 ```
 
 ### Shell installer (no GitHub account required)
@@ -203,16 +203,16 @@ jq -r '"\(.hook) \(.action)"' ~/.claude/token-guard-stats.jsonl | sort | uniq -c
 ## Uninstalling
 
 ```bash
-claude plugin uninstall claude-token-guard@rezaiyan
+claude plugin uninstall claude-token-guard@token-guard
 ```
 
 If you set `AGENT_GUARD_MODE` or other env vars in `settings.json`, remove them manually from the `"env"` block — uninstalling the plugin does not touch environment configuration.
 
-After uninstalling, the `rezaiyan/claude-plugins` marketplace entry stays in `settings.json`. Remove it manually if you want a fully clean state:
+After uninstalling, the `token-guard` marketplace entry stays in `settings.json`. Remove it manually if you want a fully clean state:
 
 ```json
 // Remove this from extraKnownMarketplaces in settings.json:
-{ "name": "rezaiyan/claude-plugins", ... }
+{ "name": "token-guard", ... }
 ```
 
 ---
